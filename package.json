@@ -1,0 +1,78 @@
+{
+  "name": "example",
+  "private": true,
+  "description": "A simple starter to get up and developing quickly with Gatsby",
+  "version": "0.1.0",
+  "author": "example",
+  "dependencies": {
+    "@emotion/babel-preset-css-prop": "11.2.0",
+    "@emotion/core": "11.0.0",
+    "@emotion/react": "11.1.5",
+    "@emotion/styled": "11.1.5",
+    "@react-pdf/renderer": "3.1.15",
+    "axios": "1.6.5",
+    "countries-and-timezones": "2.3.1",
+    "dotenv": "8.2.0",
+    "email-validator": "2.0.4",
+    "gatsby": "5.13.1",
+    "gatsby-image": "3.11.0",
+    "gatsby-plugin-emotion": "8.13.0",
+    "gatsby-plugin-image": "3.13.0",
+    "gatsby-plugin-manifest": "^5.13.0",
+    "gatsby-plugin-react-helmet": "^6.13.0",
+    "gatsby-plugin-sharp": "5.13.0",
+    "gatsby-plugin-webfonts": "2.3.2",
+    "gatsby-source-filesystem": "5.13.0",
+    "gatsby-transformer-remark": "6.13.0",
+    "gatsby-transformer-sharp": "5.13.0",
+    "libphonenumber-js": "1.9.11",
+    "moment": "2.29.1",
+    "moment-timezone": "0.5.33",
+    "prettier": "3.2.1",
+    "query-string": "8.1.0",
+    "react": "18.2.0",
+    "react-bootstrap-sweetalert": "5.2.0",
+    "react-circular-progressbar": "2.0.3",
+    "react-country-flag": "3.1.0",
+    "react-device-detect": "2.2.3",
+    "react-dom": "18.2.0",
+    "react-helmet": "6.1.0",
+    "react-hookedup": "0.1.2",
+    "react-loadingg": "1.7.2",
+    "react-motion-drawer": "3.1.0",
+    "react-outside-click-handler": "1.3.0",
+    "react-request-hook": "2.1.1",
+    "react-scroll": "1.8.1",
+    "react-scrolllock": "5.0.1",
+    "react-sticky-el": "1.1.1",
+    "react-visibility-sensor": "5.1.1",
+    "use-debounce": "10.0.0",
+    "uuid": "9.0.1",
+    "yup": "1.3.3"
+  },
+  "devDependencies": {},
+  "keywords": [
+    "gatsby"
+  ],
+  "license": "MIT",
+  "scripts": {
+    "build": "gatsby build",
+    "develop": "gatsby develop",
+    "format": "prettier --write \"src/**/*.{js,jsx,ts,tsx,json,md}\"",
+    "start": "npm run develop",
+    "serve": "gatsby serve",
+    "clean": "gatsby clean",
+    "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gatsbyjs/gatsby-starter-default"
+  },
+  "bugs": {
+    "url": "https://github.com/gatsbyjs/gatsby/issues"
+  },
+  "browserslist": [
+    "last 2 versions",
+    "not dead"
+  ]
+}

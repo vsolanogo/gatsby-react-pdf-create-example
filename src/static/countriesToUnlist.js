@@ -1,0 +1,17 @@
+export const countriesToUnlist = [
+  'UM',
+  'AQ',
+  'BQ',
+  'BV',
+  'TF',
+  'HF',
+  'HM',
+  'PN',
+  'GS',
+  'SH',
+  'IO',
+  'WF',
+  'AX',
+  'NF',
+  'SJ',
+]
