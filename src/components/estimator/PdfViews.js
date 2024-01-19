@@ -91,7 +91,8 @@ export const PdfListItem = (index, bgColor, name, hours = '', price = '') => (
       {index}
       {index && '.'}
     </Text>
-    <Text style={{ width: '64%', border: '1px solid green;', marginLeft: '8mm' }}>{name}</Text>
+    <Text style={{ width: '64%', marginLeft: '8mm',
+      }}>{name}</Text>
     <Text style={{ width: '15%' }}>
       {hours}
       {hours && 'h'}
@@ -147,7 +148,7 @@ export const PdfSubItem = (index, bgColor, name, hours = '', price = '') => (
         {index}
         {index && '.'}
       </Text>
-      <Text style={{ width: '68%', border: '1px solid green;', marginLeft: '1mm' }}>{name}</Text>
+      <Text style={{ width: '68%', marginLeft: '1mm' }}>{name}</Text>
       <Text style={{ width: '14%' }}>
         {hours}
         {hours && 'h'}
