@@ -18,78 +18,13 @@ import { DescriptionField } from './DescriptionField'
 import { SharedMail } from '../../shared/icons'
 import validator from 'email-validator'
 
-const EWrapper = styled.div`
-  margin: auto;
-  max-width: 420px;
-  margin-top: 46px;
-  position: relative;
-`
-
-const ESubmitButton = styled.button`
-  background: #fd7114;
-  border-radius: 81px;
-  width: 100%;
-  border: none;
-  font-weight: 600;
-  font-size: 20px;
-  text-align: center;
-  color: #ffffff;
-  min-height: 60px;
-
-  margin: 26px 0;
-  padding: 14px 10px;
-  cursor: pointer;
-  transition: all 0.2s;
-  -webkit-tap-highlight-color: rgba(253, 115, 23, 0.34);
-  @media (max-width: 640px) {
-    padding: 7px 16px;
-    font-size: 15px;
-  }
-  :hover {
-    transform: translateY(-5px);
-    box-shadow: 0 9.8px 59px -18px #fd7114;
-  }
-`
-
-const EStickyPos = styled.div`
-  position: absolute;
-  padding-top: 200px;
-  padding-bottom: 20px;
-  padding-left: ${(props) => `${props.paddingLeft}px`};
-`
-
-const Loader = () => (
-  <div
-    css={css`
-      position: absolute;
-      height: 100%;
-      width: 100%;
-      z-index: 999;
-    `}
-  >
-    <CircleToBlockLoading color='#fd7114' />
-  </div>
-)
-
-const ESubmitCover = styled.div`
-  position: absolute;
-  height: 100%;
-  width: 100%;
-  background: white;
-  /* filter: ${(props) => (props.enabled ? 'opacity(0.7)' : 'opacity(0)')}; */
-  filter: opacity(0.7);
-  z-index: 99;
-  visibility: ${(props) => (props.enabled ? 'visible' : 'hidden')};
-  transition: all 0.3s;
-`
-
 export const Submit = ({ locale = 'en' }) => {
   const { state, dispatch } = useContext(StateContext)
   const [rendered, setRendered] = useState(false)
 
   const { mailIsValid, displayMailError, nameIsValid, phoneError, descriptionIsValid } = state.estimator
 
-  const emailInput = useInput('')
+  const [emailInput, setEmailInput] = useState('')
   const emailFocus = useFocus()
 
   useEffect(() => {
@@ -97,17 +32,17 @@ export const Submit = ({ locale = 'en' }) => {
   }, [])
 
   useEffect(() => {
-    dispatch({ type: 'SET_EMAIL', email: emailInput.value })
+    dispatch({ type: 'SET_EMAIL', email: emailInput })
 
-    if (!validator.validate(emailInput.value)) {
+    if (!validator.validate(emailInput)) {
       dispatch({ type: 'SET_MAIL_VALID_STATUS', payload: false })
     } else {
       dispatch({ type: 'SET_MAIL_VALID_STATUS', payload: true })
     }
-  }, [emailInput.value])
+  }, [emailInput])
 
   useEffect(() => {
-    emailInput.clear()
+    setEmailInput("")
   }, [!state.estimator.sendPdfSuccess])
 
   const handleSubmitButton = (e) => {
@@ -217,7 +152,10 @@ export const Submit = ({ locale = 'en' }) => {
                 placeholder='Your Email'
                 type='email'
                 padding='6px 12px 6px 44px'
-                {...emailInput.bindToInput}
+                value={emailInput}
+                onChange={(e)=>{
+                  setEmailInput(e.target.value)
+                }}
                 onFocus={() => {
                   emailFocus.bind.onFocus()
                 }}
@@ -229,7 +167,6 @@ export const Submit = ({ locale = 'en' }) => {
                   height: 100%;
                   border: none;
                   color: #333;
-
                   font-size: 14px;
                   border-radius: 3px;
                   width: 100%;
@@ -259,3 +196,68 @@ export const Submit = ({ locale = 'en' }) => {
     />
   )
 }
+
+const EWrapper = styled.div`
+  margin: auto;
+  max-width: 420px;
+  margin-top: 46px;
+  position: relative;
+`
+
+const ESubmitButton = styled.button`
+  background: #fd7114;
+  border-radius: 81px;
+  width: 100%;
+  border: none;
+  font-weight: 600;
+  font-size: 20px;
+  text-align: center;
+  color: #ffffff;
+  min-height: 60px;
+
+  margin: 26px 0;
+  padding: 14px 10px;
+  cursor: pointer;
+  transition: all 0.2s;
+  -webkit-tap-highlight-color: rgba(253, 115, 23, 0.34);
+  @media (max-width: 640px) {
+    padding: 7px 16px;
+    font-size: 15px;
+  }
+  :hover {
+    transform: translateY(-5px);
+    box-shadow: 0 9.8px 59px -18px #fd7114;
+  }
+`
+
+const EStickyPos = styled.div`
+  position: absolute;
+  padding-top: 200px;
+  padding-bottom: 20px;
+  padding-left: ${(props) => `${props.paddingLeft}px`};
+`
+
+const Loader = () => (
+  <div
+    css={css`
+      position: absolute;
+      height: 100%;
+      width: 100%;
+      z-index: 999;
+    `}
+  >
+    <CircleToBlockLoading color='#fd7114' />
+  </div>
+)
+
+const ESubmitCover = styled.div`
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  background: white;
+  /* filter: ${(props) => (props.enabled ? 'opacity(0.7)' : 'opacity(0)')}; */
+  filter: opacity(0.7);
+  z-index: 99;
+  visibility: ${(props) => (props.enabled ? 'visible' : 'hidden')};
+  transition: all 0.3s;
+`

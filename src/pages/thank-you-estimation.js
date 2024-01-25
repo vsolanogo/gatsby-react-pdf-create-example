@@ -8,124 +8,6 @@ import { css } from '@emotion/react'
 import { useBoolean, useTimeout } from 'react-hookedup'
 import { numberWithSpaces } from '../components/estimator/SuccessEstimateWindow'
 
-const EWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  animation-fill-mode: both;
-  animation-timing-function: cubic-bezier(0.2, 0.3, 0.25, 0.9);
-  position: absolute;
-  width: 3.5em;
-  height: 3.5em;
-  overflow: hidden;
-  background: rgb(255, 255, 255);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: -1;
-`
-
-const EWrapper2 = styled.div`
-  width: 3.5em;
-  height: 3.5em;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-`
-
-const ELogowrapper = styled.div`
-  width: 3.5em;
-  height: 3.5em;
-  border: 0.5em solid #333333;
-  border-radius: 100%;
-  position: absolute;
-`
-
-const ELeftline = styled.div`
-  position: absolute;
-  right: 0;
-  bottom: 0;
-  height: 1em;
-  width: 0.56em;
-  background: #333333;
-  border-radius: 1em;
-  border-top-left-radius: 100%;
-`
-
-const ELeftlinesmall = styled.div`
-  position: absolute;
-  right: 0;
-  bottom: 0.5em;
-  height: 1.3em;
-  width: 0.2em;
-  background: #333333;
-  border-radius: 1em;
-  border-top-left-radius: 100%;
-`
-
-const ECheckmarkWrapper = styled.div`
-  width: 100%;
-  height: 100%;
-  .circ {
-    opacity: 0;
-    stroke-dasharray: 130;
-    stroke-dashoffset: 130;
-    transition: all 1s;
-  }
-  .tick {
-    stroke-dasharray: 50;
-    stroke-dashoffset: 50;
-    transition: stroke-dashoffset 1s 0.5s ease-out;
-  }
-  svg .path {
-    opacity: ${(props) => (props.run ? '1' : 'none')};
-    stroke-dashoffset: ${(props) => (props.run ? '0' : 'none')};
-  }
-`
-const EDescr = styled.p`
-  margin: 0.2em 0;
-  font-family: 'Heebo', Arial, sans-serif;
-  font-weight: 400;
-  font-size: 2.0625em;
-  letter-spacing: 0.05em;
-  color: #333;
-  max-width: 50em;
-`
-
-const buttonsStyle = css`
-  min-width: 15em;
-  min-height: 3.5em;
-  text-decoration: none;
-  border-radius: 3px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  letter-spacing: 0.1125em;
-  font-weight: 500;
-  font-family: 'Heebo', sans-serif;
-  margin-top: 1em;
-  p {
-    font-size: 1.4em;
-    margin: 0;
-  }
-`
-
-const OrangeBtn = styled(Link)`
-  ${buttonsStyle}
-  background-color: #FD7114;
-  color: #fff;
-`
-
-const WhiteBtn = styled(Link)`
-  ${buttonsStyle}
-  background-color: #fff;
-  border: 2px solid #fd7114;
-  color: #fd7114;
-  border-radius: 3px;
-`
-
 export default (props) => {
   const runAnimation = useBoolean(false)
   const rendered = useBoolean(false)
@@ -269,3 +151,121 @@ export default (props) => {
     </>
   )
 }
+
+const EWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation-fill-mode: both;
+  animation-timing-function: cubic-bezier(0.2, 0.3, 0.25, 0.9);
+  position: absolute;
+  width: 3.5em;
+  height: 3.5em;
+  overflow: hidden;
+  background: rgb(255, 255, 255);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: -1;
+`
+
+const EWrapper2 = styled.div`
+  width: 3.5em;
+  height: 3.5em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+`
+
+const ELogowrapper = styled.div`
+  width: 3.5em;
+  height: 3.5em;
+  border: 0.5em solid #333333;
+  border-radius: 100%;
+  position: absolute;
+`
+
+const ELeftline = styled.div`
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  height: 1em;
+  width: 0.56em;
+  background: #333333;
+  border-radius: 1em;
+  border-top-left-radius: 100%;
+`
+
+const ELeftlinesmall = styled.div`
+  position: absolute;
+  right: 0;
+  bottom: 0.5em;
+  height: 1.3em;
+  width: 0.2em;
+  background: #333333;
+  border-radius: 1em;
+  border-top-left-radius: 100%;
+`
+
+const ECheckmarkWrapper = styled.div`
+  width: 100%;
+  height: 100%;
+  .circ {
+    opacity: 0;
+    stroke-dasharray: 130;
+    stroke-dashoffset: 130;
+    transition: all 1s;
+  }
+  .tick {
+    stroke-dasharray: 50;
+    stroke-dashoffset: 50;
+    transition: stroke-dashoffset 1s 0.5s ease-out;
+  }
+  svg .path {
+    opacity: ${(props) => (props.run ? '1' : 'none')};
+    stroke-dashoffset: ${(props) => (props.run ? '0' : 'none')};
+  }
+`
+const EDescr = styled.p`
+  margin: 0.2em 0;
+  font-family: 'Heebo', Arial, sans-serif;
+  font-weight: 400;
+  font-size: 2.0625em;
+  letter-spacing: 0.05em;
+  color: #333;
+  max-width: 50em;
+`
+
+const buttonsStyle = css`
+  min-width: 15em;
+  min-height: 3.5em;
+  text-decoration: none;
+  border-radius: 3px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  letter-spacing: 0.1125em;
+  font-weight: 500;
+  font-family: 'Heebo', sans-serif;
+  margin-top: 1em;
+  p {
+    font-size: 1.4em;
+    margin: 0;
+  }
+`
+
+const OrangeBtn = styled(Link)`
+  ${buttonsStyle}
+  background-color: #FD7114;
+  color: #fff;
+`
+
+const WhiteBtn = styled(Link)`
+  ${buttonsStyle}
+  background-color: #fff;
+  border: 2px solid #fd7114;
+  color: #fd7114;
+  border-radius: 3px;
+`

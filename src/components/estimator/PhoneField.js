@@ -3,7 +3,6 @@ import { StateContext } from '../../store/estimator/contexts'
 import Shared from './shared'
 import { CountriesDropDown } from '../schedule-consultation/CountriesDropDown'
 import styled from '@emotion/styled'
-import { useBoolean, useInput, useFocus } from 'react-hookedup'
 import { getCountryCallingCode, parsePhoneNumberFromString } from 'libphonenumber-js'
 import ct from 'countries-and-timezones'
 import { pressOnlyNumbers } from '../../utils/keyPress'
@@ -12,6 +11,196 @@ import { css } from '@emotion/react'
 import OutsideClickHandler from 'react-outside-click-handler'
 import { countriesToUnlist } from '../../static/countriesToUnlist'
 import { validateNumber } from '../contact-us/PostForm'
+
+export const PhoneField = () => {
+  const { state, dispatch } = useContext(StateContext)
+  const { phoneError, countryIso2, ip, displayMailError } = state.estimator
+  const [phoneInput, setPhoneInput] = useState('+1')
+  const [phoneFocus, setPhoneFocus] = useState(false)
+
+  const [DDOpen, setDDOpen] = useState(false)
+
+  const [availableCountries, setAvailableCountries] = useState([])
+
+  useEffect(() => {
+    if (!!ip && !!ip.ip && !!ip.country) {
+      dispatch({
+        type: 'SET_PHONE',
+        fieldValue: getCountryCallingCode(ip.country.toUpperCase()),
+      })
+
+      dispatch({
+        type: 'SET_COUNTRY',
+        payload: ip.country.toLowerCase(),
+      })
+
+      setPhoneInput(`+${getCountryCallingCode(ip.country.toUpperCase())}`)
+    }
+
+    if (!!ip && !!ip.ip && !!ip.continent_code) {
+      dispatch({
+        type: 'SET_PHONE',
+        fieldValue: getCountryCallingCode(ip.continent_code.toUpperCase()),
+      })
+
+      dispatch({
+        type: 'SET_COUNTRY',
+        payload: ip.continent_code.toLowerCase(),
+      })
+
+      setPhoneInput(`+${getCountryCallingCode(ip.continent_code.toUpperCase())}`)
+    }
+  }, [ip])
+
+  useEffect(() => {
+    const prepareAllCountriesList = ct.getAllCountries()
+
+    const allCountriesList = Object.keys(prepareAllCountriesList)
+      .map((i) => {
+        return {
+          name: prepareAllCountriesList[i].name,
+          id: prepareAllCountriesList[i].id,
+        }
+      })
+      .filter((i) => ![...countriesToUnlist].includes(i.id))
+      .sort((a, b) => a.name.localeCompare(b.name))
+
+    setAvailableCountries(allCountriesList)
+  }, [])
+
+  useEffect(() => {
+    if (validateNumber({ phone: phoneInput, country: countryIso2 }) !== 'valid') {
+      dispatch({
+        type: 'SET_PHONE_VALID_STATUS',
+        payload: validateNumber({
+          phone: phoneInput,
+          country: countryIso2,
+        }),
+      })
+    } else {
+      dispatch({
+        type: 'SET_PHONE_VALID_STATUS',
+        payload: false,
+      })
+    }
+  }, [phoneInput])
+
+  const handleChange = (e) => {
+    if (e.target.value.length === 0) {
+      setPhoneInput('+')
+    } else {
+      setPhoneInput(`+${e.target.value.replace(/\+/g, '')}`)
+    }
+
+    const resParse = parsePhoneNumberFromString(e.target.value)
+
+    try {
+      dispatch({
+        type: 'SET_COUNTRY',
+        payload: resParse.country.toLowerCase(),
+      })
+    } catch (e) {}
+
+    if (resParse && resParse.country && resParse.isValid()) {
+      setPhoneInput(resParse.number)
+      dispatch({
+        type: 'SET_PHONE',
+        payload: resParse.number,
+      })
+    } else {
+      dispatch({
+        type: 'SET_PHONE',
+        payload: `+${e.target.value.replace(/\+/g, '')}`,
+      })
+    }
+  }
+
+  const availableCountriesWithNums = availableCountries.map((i) => {
+    return {
+      ...i,
+      numCode: getCountryCallingCode(i.id.toUpperCase()),
+    }
+  })
+
+  const handleCountryClick = ({ numCode, id }) => {
+    dispatch({
+      type: 'SET_PHONE',
+      payload: numCode,
+    })
+
+    dispatch({
+      type: 'SET_COUNTRY',
+      payload: id.toLowerCase(),
+    })
+
+    setPhoneInput(numCode)
+    setDDOpen(false)
+  }
+
+  let formattedNumber = phoneInput
+
+  try {
+    const aaa = parsePhoneNumberFromString(phoneInput)
+    formattedNumber = aaa.format('INTERNATIONAL')
+  } catch (e) {}
+
+  return (
+    <EMailWrapper focused={phoneFocus}>
+      <Shared.MailErrorLabel enabled={displayMailError && !!phoneError}>{phoneError}</Shared.MailErrorLabel>
+
+      <EFlagButton
+        onClick={() => {
+          setDDOpen(!DDOpen)
+        }}
+      >
+        <EArrowDown />
+        <div
+          css={css`
+            img {
+              height: 22px !important;
+              width: 25px !important;
+              display: flex;
+              align-items: center;
+            }
+          `}
+        >
+          <ReactCountryFlag countryCode={countryIso2} svg />
+        </div>
+      </EFlagButton>
+
+      <EInput
+        value={formattedNumber}
+        onChange={handleChange}
+        onKeyPress={pressOnlyNumbers}
+        type='tel'
+        onFocus={() => {
+          setPhoneFocus(true)
+        }}
+        onBlur={() => {
+          setPhoneFocus(false)
+        }}
+      />
+      <OutsideClickHandler
+        onOutsideClick={() => {
+          setDDOpen(false)
+        }}
+      >
+        {DDOpen && (
+          <div
+            css={css`
+              > div {
+                left: 0;
+                margin-top: 30px;
+              }
+            `}
+          >
+            <CountriesDropDown availableCountries={availableCountriesWithNums} countryClick={handleCountryClick} />
+          </div>
+        )}
+      </OutsideClickHandler>
+    </EMailWrapper>
+  )
+}
 
 const EInput = styled.input`
   height: 100%;
@@ -91,194 +280,4 @@ export const desktopCountryList = {
   height: '200px',
   width: '300px',
   zIndex: 9999,
-}
-
-export const PhoneField = () => {
-  const { state, dispatch } = useContext(StateContext)
-  const { phoneError, countryIso2, ip, displayMailError } = state.estimator
-  const phoneInput = useInput('+1')
-  const phoneFocus = useFocus()
-
-  const DDOpen = useBoolean(false)
-
-  const [availableCountries, setAvailableCountries] = useState([])
-
-  useEffect(() => {
-    if (!!ip && !!ip.ip && !!ip.country) {
-      dispatch({
-        type: 'SET_PHONE',
-        fieldValue: getCountryCallingCode(ip.country.toUpperCase()),
-      })
-
-      dispatch({
-        type: 'SET_COUNTRY',
-        payload: ip.country.toLowerCase(),
-      })
-
-      phoneInput.setValue(`+${getCountryCallingCode(ip.country.toUpperCase())}`)
-    }
-
-    if (!!ip && !!ip.ip && !!ip.continent_code) {
-      dispatch({
-        type: 'SET_PHONE',
-        fieldValue: getCountryCallingCode(ip.continent_code.toUpperCase()),
-      })
-
-      dispatch({
-        type: 'SET_COUNTRY',
-        payload: ip.continent_code.toLowerCase(),
-      })
-
-      phoneInput.setValue(`+${getCountryCallingCode(ip.continent_code.toUpperCase())}`)
-    }
-  }, [ip])
-
-  useEffect(() => {
-    const prepareAllCountriesList = ct.getAllCountries()
-
-    const allCountriesList = Object.keys(prepareAllCountriesList)
-      .map((i) => {
-        return {
-          name: prepareAllCountriesList[i].name,
-          id: prepareAllCountriesList[i].id,
-        }
-      })
-      .filter((i) => ![...countriesToUnlist].includes(i.id))
-      .sort((a, b) => a.name.localeCompare(b.name))
-
-    setAvailableCountries(allCountriesList)
-  }, [])
-
-  useEffect(() => {
-    if (validateNumber({ phone: phoneInput.value, country: countryIso2 }) !== 'valid') {
-      dispatch({
-        type: 'SET_PHONE_VALID_STATUS',
-        payload: validateNumber({
-          phone: phoneInput.value,
-          country: countryIso2,
-        }),
-      })
-    } else {
-      dispatch({
-        type: 'SET_PHONE_VALID_STATUS',
-        payload: false,
-      })
-    }
-  }, [phoneInput.value])
-
-  const handleChange = (e) => {
-    if (e.target.value.length === 0) {
-      phoneInput.setValue('+')
-    } else {
-      phoneInput.setValue(`+${e.target.value.replace(/\+/g, '')}`)
-    }
-
-    const resParse = parsePhoneNumberFromString(e.target.value)
-
-    try {
-      dispatch({
-        type: 'SET_COUNTRY',
-        payload: resParse.country.toLowerCase(),
-      })
-    } catch (e) {}
-
-    if (resParse && resParse.country && resParse.isValid()) {
-      phoneInput.setValue(resParse.number)
-      dispatch({
-        type: 'SET_PHONE',
-        payload: resParse.number,
-      })
-    } else {
-      dispatch({
-        type: 'SET_PHONE',
-        payload: `+${e.target.value.replace(/\+/g, '')}`,
-      })
-    }
-  }
-
-  const availableCountriesWithNums = availableCountries.map((i) => {
-    return {
-      ...i,
-      numCode: getCountryCallingCode(i.id.toUpperCase()),
-    }
-  })
-
-  const handleCountryClick = ({ numCode, id }) => {
-    dispatch({
-      type: 'SET_PHONE',
-      payload: numCode,
-    })
-
-    dispatch({
-      type: 'SET_COUNTRY',
-      payload: id.toLowerCase(),
-    })
-
-    phoneInput.setValue(numCode)
-    DDOpen.setFalse()
-  }
-
-  let formattedNumber = phoneInput.value
-
-  try {
-    const aaa = parsePhoneNumberFromString(phoneInput.value)
-    formattedNumber = aaa.format('INTERNATIONAL')
-  } catch (e) {}
-
-  return (
-    <EMailWrapper focused={phoneFocus.focused}>
-      <Shared.MailErrorLabel enabled={displayMailError && !!phoneError}>{phoneError}</Shared.MailErrorLabel>
-
-      <EFlagButton
-        onClick={() => {
-          DDOpen.toggle()
-        }}
-      >
-        <EArrowDown />
-        <div
-          css={css`
-            img {
-              height: 22px !important;
-              width: 25px !important;
-              display: flex;
-              align-items: center;
-            }
-          `}
-        >
-          <ReactCountryFlag countryCode={countryIso2} svg />
-        </div>
-      </EFlagButton>
-
-      <EInput
-        value={formattedNumber}
-        onChange={handleChange}
-        onKeyPress={pressOnlyNumbers}
-        type='tel'
-        onFocus={() => {
-          phoneFocus.bind.onFocus()
-        }}
-        onBlur={() => {
-          phoneFocus.bind.onBlur()
-        }}
-      />
-      <OutsideClickHandler
-        onOutsideClick={() => {
-          DDOpen.setFalse()
-        }}
-      >
-        {DDOpen.value && (
-          <div
-            css={css`
-              > div {
-                left: 0;
-                margin-top: 30px;
-              }
-            `}
-          >
-            <CountriesDropDown availableCountries={availableCountriesWithNums} countryClick={handleCountryClick} />
-          </div>
-        )}
-      </OutsideClickHandler>
-    </EMailWrapper>
-  )
 }

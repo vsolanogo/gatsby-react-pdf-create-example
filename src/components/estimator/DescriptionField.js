@@ -1,44 +1,56 @@
-import React, { useContext, useEffect } from 'react'
-import { useInput, useFocus } from 'react-hookedup'
+import React, { useContext, useEffect, useState } from 'react'
 import { StateContext } from '../../store/estimator/contexts'
 import Shared from './shared'
 import { css } from '@emotion/react'
-import styled from '@emotion/styled'
 
 export const DescriptionField = () => {
   const { dispatch, state } = useContext(StateContext)
   const { nameError, displayMailError, descriptionIsValid } = state.estimator
-  const descriptionInput = useInput('')
-  const nameFocus = useFocus()
+  const [descriptionInput, setDescriptionInput] = useState('')
+  const [isFocused, setIsFocused] = useState(false)
 
   useEffect(() => {
     dispatch({
       type: 'SET_DESCRIPTION',
-      payload: descriptionInput.value.trim(),
+      payload: descriptionInput.trim(),
     })
     dispatch({
       type: 'SET_DESCRIPTION_VALID_STATUS',
-      payload: descriptionInput.value.trim().length > 0,
+      payload: descriptionInput.trim().length > 0,
     })
-  }, [descriptionInput.value])
+  }, [descriptionInput])
+
+  const handleDescriptionChange = (event) => {
+    setDescriptionInput(event.target.value)
+    dispatch({
+      type: 'SET_FIELD_ERROR',
+      name: 'nameError',
+      error: null,
+    })
+  }
+
+  const handleFocus = () => {
+    setIsFocused(true)
+  }
+
+  const handleBlur = () => {
+    setIsFocused(false)
+  }
 
   return (
-    <Shared.MailWrapper focused={nameFocus.focused}>
+    <Shared.MailWrapper focused={isFocused}>
       <Shared.MailErrorLabel enabled={displayMailError && !descriptionIsValid}>
         This field is required
       </Shared.MailErrorLabel>
       <textarea
         placeholder='Describe your app'
-        {...descriptionInput.bindToInput}
+        value={descriptionInput}
+        onChange={handleDescriptionChange}
         onClick={() => {
           dispatch({ type: 'SET_FIELD_ERROR', name: 'nameError', error: null })
         }}
-        onFocus={() => {
-          nameFocus.bind.onFocus()
-        }}
-        onBlur={() => {
-          nameFocus.bind.onBlur()
-        }}
+        onFocus={handleFocus}
+        onBlur={handleBlur}
         css={css`
           height: 100%;
           border: none;

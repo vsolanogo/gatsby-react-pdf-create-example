@@ -39,48 +39,48 @@ module.exports = {
       },
     },
 
-    {
-      resolve: `gatsby-plugin-webfonts`,
-      options: {
-        fonts: {
-          google: [
-            {
-              family: `Montserrat`,
-              subsets: [`latin`],
-              variants: [`300`, `400`, `500`, `600`, `700`],
-              strategy: 'selfHosted',
-            },
-            {
-              family: `Montserrat`,
-              subsets: [`Cyrillic`],
-              variants: [`400`, `500`],
-              strategy: 'selfHosted',
-            },
-            {
-              family: `Roboto`,
-              subsets: [`Cyrillic`],
-              variants: [`400`, `500`, `700`],
-              strategy: 'selfHosted',
-            },
+    // {
+    //   resolve: `gatsby-plugin-webfonts`,
+    //   options: {
+    //     fonts: {
+    //       google: [
+    //         {
+    //           family: `Montserrat`,
+    //           subsets: [`latin`],
+    //           variants: [`300`, `400`, `500`, `600`, `700`],
+    //           strategy: 'selfHosted',
+    //         },
+    //         {
+    //           family: `Montserrat`,
+    //           subsets: [`Cyrillic`],
+    //           variants: [`400`, `500`],
+    //           strategy: 'selfHosted',
+    //         },
+    //         {
+    //           family: `Roboto`,
+    //           subsets: [`Cyrillic`],
+    //           variants: [`400`, `500`, `700`],
+    //           strategy: 'selfHosted',
+    //         },
 
-            {
-              family: `Heebo`,
-              subsets: [`Cyrillic`],
-              variants: [`400`, `500`],
-              strategy: 'selfHosted',
-            },
-            {
-              family: `Heebo`,
-              subsets: [`latin`],
-              variants: [`300`, `400`, `500`, `600`, `700`, `800`],
-              strategy: 'selfHosted',
-            },
-          ],
-        },
-        useMinify: true,
-        usePreload: false,
-      },
-    },
+    //         {
+    //           family: `Heebo`,
+    //           subsets: [`Cyrillic`],
+    //           variants: [`400`, `500`],
+    //           strategy: 'selfHosted',
+    //         },
+    //         {
+    //           family: `Heebo`,
+    //           subsets: [`latin`],
+    //           variants: [`300`, `400`, `500`, `600`, `700`, `800`],
+    //           strategy: 'selfHosted',
+    //         },
+    //       ],
+    //     },
+    //     useMinify: true,
+    //     usePreload: false,
+    //   },
+    // },
 
     {
       resolve: `gatsby-plugin-emotion`,

@@ -1,30 +1,28 @@
-import React, { useContext, useEffect } from 'react'
-import Icons, { SharedHuman } from '../../shared/icons'
-import { useInput, useFocus } from 'react-hookedup'
+import React, { useContext, useEffect, useState } from 'react'
+import { SharedHuman } from '../../shared/icons'
 import { StateContext } from '../../store/estimator/contexts'
 import Shared from './shared'
 import { css } from '@emotion/react'
-import styled from '@emotion/styled'
 
 export const NameField = () => {
   const { dispatch, state } = useContext(StateContext)
   const { nameError, displayMailError, nameIsValid } = state.estimator
-  const nameInput = useInput('')
-  const nameFocus = useFocus()
+  const [name, setName] = useState('')
+  const [isNameFocused, setIsNameFocused] = useState(false)
 
   useEffect(() => {
     dispatch({
       type: 'SET_NAME',
-      payload: nameInput.value.trim(),
+      payload: name.trim(),
     })
     dispatch({
       type: 'SET_NAME_VALID_STATUS',
-      payload: nameInput.value.trim().length > 0,
+      payload: name.trim().length > 0,
     })
-  }, [nameInput.value])
+  }, [name])
 
   return (
-    <Shared.MailWrapper focused={nameFocus.focused}>
+    <Shared.MailWrapper focused={isNameFocused}>
       <Shared.MailErrorLabel enabled={displayMailError && !nameIsValid}>This field is required</Shared.MailErrorLabel>
 
       <div
@@ -41,21 +39,21 @@ export const NameField = () => {
         placeholder='Name'
         type='fullName'
         padding='6px 12px 6px 44px'
-        {...nameInput.bindToInput}
+        value={name}
+        onChange={(e) => setName(e.target.value)}
         onClick={() => {
           dispatch({ type: 'SET_FIELD_ERROR', name: 'nameError', error: null })
         }}
         onFocus={() => {
-          nameFocus.bind.onFocus()
+          setIsNameFocused(true)
         }}
         onBlur={() => {
-          nameFocus.bind.onBlur()
+          setIsNameFocused(false)
         }}
         css={css`
           height: 100%;
           border: none;
           color: #333;
-
           font-size: 14px;
           border-radius: 3px;
           width: 100%;
