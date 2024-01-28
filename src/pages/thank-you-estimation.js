@@ -5,20 +5,20 @@ import SEO from '../components/seo'
 import Shared from '../components/shared'
 import { Link, navigate } from 'gatsby'
 import { css } from '@emotion/react'
-import { useBoolean, useTimeout } from 'react-hookedup'
 import { numberWithSpaces } from '../components/estimator/SuccessEstimateWindow'
+import { useTimeout } from 'usehooks-ts'
 
 export default (props) => {
-  const runAnimation = useBoolean(false)
-  const rendered = useBoolean(false)
+  const [runAnimation, setRunAnimation] = useState(false)
+  const [rendered, setRendered] = useState(false)
   const [topText, setTopText] = useState('Sending...')
 
   useEffect(() => {
-    rendered.setTrue()
+    setRendered(true)
   }, [])
 
   useTimeout(() => {
-    runAnimation.setTrue()
+    setRunAnimation(true)
   }, 661)
 
   useTimeout(() => {
@@ -26,14 +26,14 @@ export default (props) => {
   }, 3000)
 
   if (!props?.location?.state?.price) {
-    if (rendered.value) {
+    if (rendered) {
       navigate('/estimate-your-app/')
     }
 
     return null
   }
 
-  if (!rendered.value) {
+  if (!rendered) {
     return null
   }
 
@@ -89,7 +89,7 @@ export default (props) => {
           >
             <EWrapper>
               <EWrapper2>
-                <ECheckmarkWrapper run={runAnimation.value}>
+                <ECheckmarkWrapper run={runAnimation}>
                   <svg x='0px' y='0px' viewBox='0 0 37 37' xmlSpace='preserve'>
                     <path
                       className='tick path'

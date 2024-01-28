@@ -34,25 +34,25 @@
     "react-device-detect": "2.2.3",
     "react-dom": "18.2.0",
     "react-helmet": "6.1.0",
-    "react-hookedup": "0.1.2",
-    "react-loadingg": "1.7.2",
-    "react-motion-drawer": "3.1.0",
+    "react-loader-spinner": "^6.1.6",
     "react-outside-click-handler": "1.3.0",
     "react-request-hook": "2.1.1",
     "react-scroll": "1.9.0",
-    "react-scrolllock": "5.0.1",
     "react-sticky-el": "2.1.0",
     "react-visibility-sensor": "5.1.1",
     "use-debounce": "10.0.0",
+    "usehooks-ts": "^2.10.0",
     "uuid": "9.0.1",
     "yup": "1.3.3"
   },
   "resolutions": {
     "@react-pdf/image": "2.2.3",
     "@react-pdf/pdfkit": "3.0.4"
- },
-
-  "devDependencies": {},
+  },
+  "overrides": {
+    "@react-pdf/image": "2.2.3",
+    "@react-pdf/pdfkit": "3.0.4"
+},
   "keywords": [
     "gatsby"
   ],

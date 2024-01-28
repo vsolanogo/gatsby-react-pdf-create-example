@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
 import styled from '@emotion/styled'
 import { StateContext } from '../../store/estimator/contexts'
-import { useInput, useFocus } from 'react-hookedup'
 import { SuccessEstimateWindow } from './SuccessEstimateWindow'
 import { ErrorPdfRequestWindow } from './ErrorPdfRequestWindow'
 import { css } from '@emotion/react'
@@ -10,13 +9,13 @@ import { ProgressCircle } from './ProgressCircle'
 import WindowDimentions from '../WindowDimentions'
 import { isMobile } from 'react-device-detect'
 import { Element, scroller } from 'react-scroll'
-import { CircleToBlockLoading } from 'react-loadingg'
 import Shared from './shared'
 import { NameField } from './NameField'
 import { PhoneField } from './PhoneField'
 import { DescriptionField } from './DescriptionField'
 import { SharedMail } from '../../shared/icons'
 import validator from 'email-validator'
+import { Hourglass } from 'react-loader-spinner'
 
 export const Submit = ({ locale = 'en' }) => {
   const { state, dispatch } = useContext(StateContext)
@@ -25,7 +24,7 @@ export const Submit = ({ locale = 'en' }) => {
   const { mailIsValid, displayMailError, nameIsValid, phoneError, descriptionIsValid } = state.estimator
 
   const [emailInput, setEmailInput] = useState('')
-  const emailFocus = useFocus()
+  const [emailFocus, setEmailFocus] = useState(false)
 
   useEffect(() => {
     setRendered(true)
@@ -42,7 +41,7 @@ export const Submit = ({ locale = 'en' }) => {
   }, [emailInput])
 
   useEffect(() => {
-    setEmailInput("")
+    setEmailInput('')
   }, [!state.estimator.sendPdfSuccess])
 
   const handleSubmitButton = (e) => {
@@ -135,7 +134,7 @@ export const Submit = ({ locale = 'en' }) => {
 
             <NameField />
 
-            <Shared.MailWrapper focused={emailFocus.focused}>
+            <Shared.MailWrapper focused={emailFocus}>
               <Shared.MailErrorLabel enabled={displayMailError && !mailIsValid}>Invalid email</Shared.MailErrorLabel>
 
               <div
@@ -153,14 +152,14 @@ export const Submit = ({ locale = 'en' }) => {
                 type='email'
                 padding='6px 12px 6px 44px'
                 value={emailInput}
-                onChange={(e)=>{
+                onChange={(e) => {
                   setEmailInput(e.target.value)
                 }}
                 onFocus={() => {
-                  emailFocus.bind.onFocus()
+                  setEmailFocus(true)
                 }}
                 onBlur={() => {
-                  emailFocus.bind.onBlur()
+                  setEmailFocus(false)
                 }}
                 onKeyPress={handleInputMailKeyPress}
                 css={css`
@@ -246,7 +245,15 @@ const Loader = () => (
       z-index: 999;
     `}
   >
-    <CircleToBlockLoading color='#fd7114' />
+    <Hourglass
+      visible={true}
+      height='80'
+      width='80'
+      ariaLabel='hourglass-loading'
+      wrapperStyle={{}}
+      wrapperClass=''
+      colors={['#306cce', '#72a1ed']}
+    />
   </div>
 )
 
