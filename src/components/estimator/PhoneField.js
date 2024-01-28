@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from 'react'
+import React, { useContext, useState, useEffect, useRef } from 'react'
 import { StateContext } from '../../store/estimator/contexts'
 import Shared from './shared'
 import { CountriesDropDown } from '../schedule-consultation/CountriesDropDown'
@@ -8,7 +8,7 @@ import ct from 'countries-and-timezones'
 import { pressOnlyNumbers } from '../../utils/keyPress'
 import ReactCountryFlag from 'react-country-flag'
 import { css } from '@emotion/react'
-import OutsideClickHandler from 'react-outside-click-handler'
+import { useOnClickOutside } from 'usehooks-ts'
 import { countriesToUnlist } from '../../static/countriesToUnlist'
 import { validateNumber } from '../contact-us/PostForm'
 
@@ -17,10 +17,24 @@ export const PhoneField = () => {
   const { phoneError, countryIso2, ip, displayMailError } = state.estimator
   const [phoneInput, setPhoneInput] = useState('+1')
   const [phoneFocus, setPhoneFocus] = useState(false)
+  const ref = useRef(null)
 
   const [DDOpen, setDDOpen] = useState(false)
 
   const [availableCountries, setAvailableCountries] = useState([])
+
+  const handleClickOutside = () => {
+    // Your custom logic here
+    console.log('clicked outside')
+    setDDOpen(false)
+  }
+
+  const handleClickInside = () => {
+    // Your custom logic here
+    console.log('clicked inside')
+  }
+
+  useOnClickOutside(ref, handleClickOutside)
 
   useEffect(() => {
     if (!!ip && !!ip.ip && !!ip.country) {
@@ -180,27 +194,28 @@ export const PhoneField = () => {
           setPhoneFocus(false)
         }}
       />
-      <OutsideClickHandler
-        onOutsideClick={() => {
-          setDDOpen(false)
-        }}
-      >
-        {DDOpen && (
-          <div
-            css={css`
-              > div {
-                left: 0;
-                margin-top: 30px;
-              }
-            `}
-          >
-            <CountriesDropDown availableCountries={availableCountriesWithNums} countryClick={handleCountryClick} />
-          </div>
-        )}
-      </OutsideClickHandler>
+
+      <EOutside data-open={DDOpen} ref={ref} onClick={handleClickInside}>
+        <CountriesDropDown availableCountries={availableCountriesWithNums} countryClick={handleCountryClick} />
+      </EOutside>
     </EMailWrapper>
   )
 }
+
+const EOutside = styled.div`
+  display: none;
+
+  > div {
+    left: 0;
+    margin-top: 30px;
+  }
+
+  border-color: ${(props) => (props.focused ? '#ffa423' : '#dedede')};
+
+  &[data-open='true'] {
+    display: block;
+  }
+`
 
 const EInput = styled.input`
   height: 100%;
