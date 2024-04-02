@@ -1,75 +1,75 @@
 {
-  "name": "example",
-  "private": true,
-  "description": "A simple starter to get up and developing quickly with Gatsby",
-  "version": "0.1.0",
-  "author": "example",
-  "dependencies": {
-    "@emotion/babel-preset-css-prop": "^11.11.0",
-    "@emotion/core": "11.0.0",
-    "@emotion/react": "^11.11.3",
-    "@emotion/styled": "^11.11.0",
-    "@react-pdf/renderer": "^3.3.8",
-    "axios": "1.6.5",
-    "countries-and-timezones": "2.3.1",
-    "email-validator": "2.0.4",
-    "gatsby": "^5.13.3",
-    "gatsby-plugin-emotion": "^8.13.1",
-    "gatsby-plugin-image": "^3.13.1",
-    "gatsby-plugin-manifest": "^5.13.1",
-    "gatsby-plugin-react-helmet": "^6.13.1",
-    "gatsby-plugin-sharp": "^5.13.1",
-    "gatsby-source-filesystem": "^5.13.1",
-    "gatsby-transformer-remark": "^6.13.1",
-    "gatsby-transformer-sharp": "^5.13.1",
-    "libphonenumber-js": "1.9.11",
-    "moment": "2.29.1",
-    "moment-timezone": "0.5.33",
-    "prettier": "^3.2.5",
-    "query-string": "8.1.0",
-    "react": "18.2.0",
-    "react-bootstrap-sweetalert": "5.2.0",
-    "react-circular-progressbar": "2.1.0",
-    "react-country-flag": "3.1.0",
-    "react-device-detect": "2.2.3",
-    "react-dom": "18.2.0",
-    "react-helmet": "6.1.0",
-    "react-loader-spinner": "^6.1.6",
-    "react-request-hook": "2.1.1",
-    "react-scroll": "1.9.0",
-    "react-sticky-el": "2.1.0",
-    "react-visibility-sensor": "5.1.1",
-    "use-debounce": "10.0.0",
-    "usehooks-ts": "^2.10.0",
-    "uuid": "9.0.1",
-    "yup": "1.3.3"
-  },
-  "resolutions": {
-    "@react-pdf/image": "2.2.3",
-    "@react-pdf/pdfkit": "3.0.4"
-  },
-  "overrides": {
-    "@react-pdf/image": "2.2.3",
-    "@react-pdf/pdfkit": "3.0.4"
-  },
-  "keywords": [
-    "gatsby"
-  ],
-  "license": "MIT",
-  "scripts": {
-    "build": "gatsby build",
-    "develop": "gatsby develop",
-    "format": "prettier --write \"src/**/*.{js,jsx,ts,tsx,json,md}\"",
-    "start": "npm run develop",
-    "serve": "gatsby serve",
-    "clean": "gatsby clean",
-    "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/gatsbyjs/gatsby-starter-default"
-  },
-  "bugs": {
-    "url": "https://github.com/gatsbyjs/gatsby/issues"
+    "name": "example",
+    "private": true,
+    "description": "A simple starter to get up and developing quickly with Gatsby",
+    "version": "0.1.0",
+    "author": "example",
+    "dependencies": {
+      "@emotion/babel-preset-css-prop": "11.11.0",
+      "@emotion/core": "11.0.0",
+      "@emotion/react": "11.11.4",
+      "@emotion/styled": "11.11.5",
+      "@react-pdf/renderer": "3.4.2",
+      "axios": "1.6.8",
+      "countries-and-timezones": "3.6.0",
+      "email-validator": "2.0.4",
+      "gatsby": "5.13.3",
+      "gatsby-plugin-emotion": "8.13.1",
+      "gatsby-plugin-image": "3.13.1",
+      "gatsby-plugin-manifest": "5.13.1",
+      "gatsby-plugin-react-helmet": "6.13.1",
+      "gatsby-plugin-sharp": "5.13.1",
+      "gatsby-source-filesystem": "5.13.1",
+      "gatsby-transformer-remark": "6.13.1",
+      "gatsby-transformer-sharp": "5.13.1",
+      "libphonenumber-js": "1.10.59",
+      "moment": "2.30.1",
+      "moment-timezone": "0.5.45",
+      "prettier": "3.2.5",
+      "query-string": "9.0.0",
+      "react": "18.2.0",
+      "react-bootstrap-sweetalert": "5.2.0",
+      "react-circular-progressbar": "2.1.0",
+      "react-country-flag": "3.1.0",
+      "react-device-detect": "2.2.3",
+      "react-dom": "18.2.0",
+      "react-helmet": "6.1.0",
+      "react-loader-spinner": "6.1.6",
+      "react-request-hook": "2.1.1",
+      "react-scroll": "1.9.0",
+      "react-sticky-el": "2.1.0",
+      "react-visibility-sensor": "5.1.1",
+      "use-debounce": "10.0.0",
+      "usehooks-ts": "3.0.2",
+      "uuid": "9.0.1",
+      "yup": "1.4.0"
+    },
+    "resolutions": {
+      "@react-pdf/image": "2.2.3",
+      "@react-pdf/pdfkit": "3.0.4"
+    },
+    "overrides": {
+      "@react-pdf/image": "2.2.3",
+      "@react-pdf/pdfkit": "3.0.4"
+    },
+    "keywords": [
+      "gatsby"
+    ],
+    "license": "MIT",
+    "scripts": {
+      "build": "gatsby build",
+      "develop": "gatsby develop",
+      "format": "prettier --write \"src/**/*.{js,jsx,ts,tsx,json,md}\"",
+      "start": "npm run develop",
+      "serve": "gatsby serve",
+      "clean": "gatsby clean",
+      "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\" && exit 1"
+    },
+    "repository": {
+      "type": "git",
+      "url": "https://github.com/gatsbyjs/gatsby-starter-default"
+    },
+    "bugs": {
+      "url": "https://github.com/gatsbyjs/gatsby/issues"
+    }
   }
-}
