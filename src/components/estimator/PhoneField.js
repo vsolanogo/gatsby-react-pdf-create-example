@@ -37,7 +37,7 @@ export const PhoneField = () => {
   useOnClickOutside(ref, handleClickOutside)
 
   useEffect(() => {
-    console.time("phonefield ip");
+    console.time('phonefield ip')
     if (!!ip && !!ip.ip && !!ip.country) {
       dispatch({
         type: 'SET_PHONE',
@@ -65,15 +65,15 @@ export const PhoneField = () => {
 
       setPhoneInput(`+${getCountryCallingCode(ip.continent_code.toUpperCase())}`)
     }
-    console.timeEnd("phonefield ip");
+    console.timeEnd('phonefield ip')
   }, [ip])
 
   useEffect(() => {
-    console.time("phonefield []");
+    console.time('phonefield []')
 
     const prepareAllCountriesList = ct.getAllCountries()
 
-    console.log({prepareAllCountriesList});
+    console.log({ prepareAllCountriesList })
 
     const allCountriesList = Object.keys(prepareAllCountriesList)
       .map((i) => {
@@ -86,12 +86,11 @@ export const PhoneField = () => {
       .sort((a, b) => a.name.localeCompare(b.name))
 
     setAvailableCountries(allCountriesList)
-    console.timeEnd("phonefield []");
-
+    console.timeEnd('phonefield []')
   }, [])
 
   useEffect(() => {
-    console.time("phonefield [phoneInput]");
+    console.time('phonefield [phoneInput]')
 
     if (validateNumber({ phone: phoneInput, country: countryIso2 }) !== 'valid') {
       dispatch({
@@ -107,8 +106,7 @@ export const PhoneField = () => {
         payload: false,
       })
     }
-    console.timeEnd("phonefield [phoneInput]");
-
+    console.timeEnd('phonefield [phoneInput]')
   }, [phoneInput])
 
   const handleChange = (e) => {
@@ -166,11 +164,11 @@ export const PhoneField = () => {
   let formattedNumber = phoneInput
 
   try {
-    console.time(" const aaa = parsePhoneNumberFromString(phoneInput)");
+    console.time('const aaa = parsePhoneNumberFromString(phoneInput)')
     const aaa = parsePhoneNumberFromString(phoneInput)
     formattedNumber = aaa.format('INTERNATIONAL')
 
-    console.timeEnd(" const aaa = parsePhoneNumberFromString(phoneInput)");
+    console.timeEnd('const aaa = parsePhoneNumberFromString(phoneInput)')
   } catch (e) {}
 
   return (

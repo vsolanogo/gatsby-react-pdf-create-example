@@ -56,7 +56,13 @@ const Controller = ({ data }) => {
     }, 0)
   console.log({ data })
   const imgLogo = data.logo.publicURL
-  const imgWavingEmoji = data.wavingEmoji.childImageSharp.fixed.src
+  console.log('data.wavingEmoji')
+  console.log(data.wavingEmoji)
+  console.log(data.wavingEmoji)
+  console.log(data.wavingEmoji)
+  console.log(data.wavingEmoji)
+
+  const imgWavingEmoji = data.wavingEmoji.childImageSharp.gatsbyImageData.images.fallback.src
 
   let pdfLines = 0
 
@@ -209,15 +215,18 @@ const Controller = ({ data }) => {
       </BlobProvider>
       <PDFViewer>{docResult}</PDFViewer>
 
-      <PDFDownloadLink document={docResult} fileName='somename.pdf'>
-        {({ blob, url, loading, error }) => {
-          //console.log({ blob })
-          //console.log({ url })
-          //console.log({ error })
+      {!!docResult && (
+        <PDFDownloadLink document={docResult} fileName='somename.pdf'>
+          {({ blob, url, loading, error }) => {
+            console.log({ blob })
+            console.log({ url })
+            console.log({ error })
+            console.log({ loading })
 
-          return <div>{loading ? 'Loading document...' : 'Download now!'}</div>
-        }}
-      </PDFDownloadLink>
+            return <div>{loading ? 'Loading document...' : 'Download now!'}</div>
+          }}
+        </PDFDownloadLink>
+      )}
     </div>
   )
 }
@@ -234,9 +243,7 @@ export const PdfCreator = (props) => (
         }
         wavingEmoji: file(relativePath: { eq: "wavingEmojiHand.png" }) {
           childImageSharp {
-            fixed {
-              ...GatsbyImageSharpFixed
-            }
+            gatsbyImageData(layout: FIXED)
           }
         }
       }
